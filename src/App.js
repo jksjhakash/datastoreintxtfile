@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState } from 'react';
+import {saveAs} from 'file-saver';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+function App(){
+  const [text, setText] = useState('');
+  const handle = (e) => {
+    setText(e.target.value);
+  };
+  const Download = () => {
+    console.log(text);
+    const blob =new Blob([text], {type: 'text/plain;charset=utf-8'});
+
+    saveAs(blob, 'data.txt');
+    setText('');
+    console.log(text);
+  };
+
+  return(
+    <div>
+    <div>
+      <textarea id="text" rows="5" cols="40" onChange={handle} placeholder = "enter text" value={text}/>
     </div>
-  );
+    <div>
+        <button onClick={Download}>hit me</button>
+    </div>
+    </div>
+  )
 }
 
 export default App;
+
+
